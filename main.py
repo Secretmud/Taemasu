@@ -22,8 +22,8 @@ class Application:
         self.attack = 1
         self.talent_point = 0
         self.prev_level = 1
-        pygame.display.set_caption('Something something Dark Side')
-        self.health_bar = pygame.image.load('healthbar.png')
+        pygame.display.set_caption('Taemasu v0.1')
+        self.health_bar = pygame.image.load('lib/img/healthbar.png')
         self.player = Player(self.hp, self.attack, self.max_hp,
         self.display_width, self.display_height, self.health_bar, pygame)
         self.game_display = pygame.display.set_mode((self.w, self.h))
@@ -32,14 +32,14 @@ class Application:
         self.crashed = False
         self.game_display.fill(self.white)
         self.enemies = []
-        self.sword = pygame.image.load('sword.png')
+        self.sword = pygame.image.load('lib/img/sword.png')
         self.map = Map('maptest.txt', self.display_width, self.display_height, pygame)
         pygame.font.init()  # you have to call this at the start,
         # if you want to use this module.
         self.myfont = pygame.font.SysFont('Comic Sans MS', 30)
         self.point = 0
         self.xp_new = 100 
-        self.background = pygame.image.load('background4.png')
+        self.background = pygame.image.load('lib/img/background4.png')
         self.enemy_spawn_time = 2
         self.multiplier = 1
         self.start = True
@@ -140,7 +140,7 @@ class Application:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.reset()
-        image = pygame.image.load("gameover.png")
+        image = pygame.image.load("lib/img/gameover.png")
         # image = pygame.transform.scale(image, (790, 740))
         self.game_display.blit(image, (0, 0))
 
@@ -152,7 +152,7 @@ class Application:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.start = False
-        image = pygame.image.load("start.png")
+        image = pygame.image.load("lib/img/start.png")
         # image = pygame.transform.scale(image, (790, 740))
         self.game_display.blit(image, (0, 0))
 

@@ -34,13 +34,13 @@ class Enemy:
         self.type = new_type
 
         if new_type == 0:
-            self.load_image("enemy_fire.png", pygame)
+            self.load_image("lib/img/enemy_fire.png", pygame)
         elif new_type == 1:
-            self.load_image("enemy_water.png", pygame)
+            self.load_image("lib/img/enemy_water.png", pygame)
         elif new_type == 2:
-            self.load_image("enemy_wind.png", pygame)
+            self.load_image("lib/img/enemy_wind.png", pygame)
         elif new_type == 3:
-            self.load_image("enemy_earth.png", pygame)
+            self.load_image("lib/img/enemy_earth.png", pygame)
 
 
     def load_image(self, image_name, pygame):

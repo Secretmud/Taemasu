@@ -26,8 +26,8 @@ class Player:
         self.current_stun_time = 0
         self.stunned = False
         self.is_hitting_enemy = False
-        self.fire_beam = pygame.image.load('firebeam.png')
-        self.sucking_beam = pygame.image.load('sugingbeam.png')
+        self.fire_beam = pygame.image.load("lib/img/firebeam.png")
+        self.sucking_beam = pygame.image.load("lib/img/sugingbeam.png")
         self.angle = 0
         self.mouse = False
         self.right_mouse = False 
@@ -36,7 +36,7 @@ class Player:
         self.can_suck_now = True
         self.type = 0
 
-        self.load_image("player_player_def.png", pygame, "firebeam.png")
+        self.load_image("lib/img/player_player_def.png", pygame, "lib/img/firebeam.png")
 
     def update(self, game_display, pygame, map, enemies):
         if ((self.x_bounds - self.picture_size[0] > self.x_position and self.current_x_speed > 0) or
@@ -295,13 +295,13 @@ class Player:
     def set_type(self, damage_type, pygame):
 
         if damage_type == 0:
-            self.load_image("player_player_fire.png", pygame, "firebeam.png")
+            self.load_image("lib/img/player_player_fire.png", pygame, "lib/img/firebeam.png")
         elif damage_type == 1:
-            self.load_image("player_player_water.png", pygame, "waterbeam.png")
+            self.load_image("lib/img/player_player_water.png", pygame, "lib/img/waterbeam.png")
         elif damage_type == 2:
-            self.load_image("player_player_wind.png", pygame, "windbeam.png")
+            self.load_image("lib/img/player_player_wind.png", pygame, "lib/img/windbeam.png")
         elif damage_type == 3:
-            self.load_image("player_player_earth.png", pygame, "earthbeam.png")
+            self.load_image("lib/img/player_player_earth.png", pygame, "lib/img/earthbeam.png")
         self.type = damage_type
 
     def load_image(self, image_name, pygame, beam_name):
