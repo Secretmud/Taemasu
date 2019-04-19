@@ -23,8 +23,8 @@ class Application:
         self.talent_point = 0
         self.prev_level = 1
         self.name = "test name"
-        high_score_current = self.score_display.score_read()
         self.score_display = ScoreScreen()
+        high_score_current = self.score_display.score_read()
         pygame.display.set_caption('Taemasu v0.1')
         self.health_bar = pygame.image.load('lib/img/healthbar.png')
         self.player = Player(self.hp, self.attack, self.max_hp,
