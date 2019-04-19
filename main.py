@@ -11,8 +11,7 @@ from lib.item import Item, HealthBox, AttackBoost
 class Application:
     def __init__(self):
         pygame.init()
-        self.w = 1200
-        self.h = 1000
+        displaySize = pygame.display.Info()
         self.display_width = 790
         self.display_height = 740
         self.level = 1
@@ -26,7 +25,7 @@ class Application:
         self.health_bar = pygame.image.load('lib/img/healthbar.png')
         self.player = Player(self.hp, self.attack, self.max_hp,
         self.display_width, self.display_height, self.health_bar, pygame)
-        self.game_display = pygame.display.set_mode((self.w, self.h))
+        self.game_display = pygame.display.set_mode((displaySize.current_w, displaySize.current_h))
         self.white = (255, 255, 255)
         self.clock = pygame.time.Clock()
         self.crashed = False
