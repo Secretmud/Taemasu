@@ -2,6 +2,7 @@ from math import sqrt, ceil
 import pygame
 from lib.player import Player
 from lib.enemy import Enemy
+from lib.score import ScoreScreen
 import random
 from lib.map import Map
 from time import sleep
@@ -9,9 +10,9 @@ import threading
 from lib.item import Item, HealthBox, AttackBoost
 
 class Application:
+
     def __init__(self):
         pygame.init()
-        displaySize = pygame.display.Info()
         self.display_width = 790
         self.display_height = 740
         self.level = 1
@@ -21,11 +22,14 @@ class Application:
         self.attack = 1
         self.talent_point = 0
         self.prev_level = 1
+        self.name = "test name"
+        self.score_display = ScoreScreen()
         pygame.display.set_caption('Taemasu v0.1')
         self.health_bar = pygame.image.load('lib/img/healthbar.png')
         self.player = Player(self.hp, self.attack, self.max_hp,
-        self.display_width, self.display_height, self.health_bar, pygame)
-        self.game_display = pygame.display.set_mode((displaySize.current_w, displaySize.current_h))
+                             self.display_width, self.display_height, 
+                             self.health_bar, pygame)
+        self.game_display = pygame.display.set_mode((1200, 1200))
         self.white = (255, 255, 255)
         self.clock = pygame.time.Clock()
         self.crashed = False
@@ -45,18 +49,18 @@ class Application:
         self.items = []
 
         for count in range(0, 5):
-
             test_enemy = Enemy(random.randint(0, self.display_width), random.randint(0, self.display_height),
                                self.health_bar, pygame, self.multiplier)
             self.enemies.append(test_enemy)
 
         self.add_enemy()
 
+
     def main(self):
         while not self.crashed:
             if self.start:
                 self.start_game()
-            elif self.player.hp > 0:
+            elif self.player.hp >= 0:
                 self.run_game()
             else:
                 self.game_over()
@@ -110,6 +114,7 @@ class Application:
 
         self.update_items()
 
+
     def update_items(self):
 
         new_item_list = []
@@ -131,6 +136,7 @@ class Application:
             elif item.type == 1:
                 self.player.increase_attack(item.damage)
             item.picked_up = True
+
 
     def game_over(self):
         for event in pygame.event.get():
@@ -155,6 +161,7 @@ class Application:
         # image = pygame.transform.scale(image, (790, 740))
         self.game_display.blit(image, (0, 0))
 
+
     def reset(self):
         self.level = 1
         self.xp = 1
@@ -178,6 +185,7 @@ class Application:
             self.enemies.append(test_enemy)
 
         self.add_enemy()
+
 
     def add_enemy(self):
         threading.Timer(self.enemy_spawn_time, self.add_enemy).start()
@@ -210,6 +218,10 @@ class Application:
         self.game_display.blit(enemy_damage, (845, 205))
         image = pygame.transform.scale(self.player.playerImg, (120, 200))
         self.game_display.blit(image, (845, 300))
+        high_score = self.myfont.render('Highscores:', False, (0, 0, 0))
+        self.game_display.blit(high_score, (845, 235))
+        score_values = self.myfont.render(str(self.score_display.score_read()), False, (0, 0, 0))
+        self.game_display.blit(score_values, (855, 265))
 
 if __name__ == "__main__":
     main = Application()
