@@ -7,6 +7,7 @@ from lib.map import Map
 from time import sleep
 import threading
 from lib.item import Item, HealthBox, AttackBoost
+import sys
 
 class Application:
     def __init__(self):
@@ -21,6 +22,7 @@ class Application:
         self.attack = 1
         self.talent_point = 0
         self.prev_level = 1
+        self.is_paused = False
         pygame.display.set_caption('Taemasu v0.1')
         self.health_bar = pygame.image.load('lib/img/healthbar.png')
         self.player = Player(self.hp, self.attack, self.max_hp,
@@ -43,6 +45,7 @@ class Application:
         self.multiplier = 1
         self.start = True
         self.items = []
+        self.exiting = False
 
         for count in range(0, 5):
 
@@ -57,20 +60,34 @@ class Application:
             if self.start:
                 self.start_game()
             elif self.player.hp > 0:
-                self.run_game()
+                if self.exiting:
+                    self.end_game()
+                elif self.is_paused:
+                    self.paused()
+                else:
+                    self.run_game()
             else:
                 self.game_over()
+
 
             pygame.display.update()
             self.clock.tick(60)
 
+        pygame.quit()
 
     def run_game(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.crashed = True
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    self.is_paused = not self.is_paused
+                elif event.key == pygame.K_ESCAPE:
+                    self.exiting = True
 
-            self.player.get_key(event, pygame, self.game_display, self.enemies)
+            if not self.is_paused:
+                self.player.get_key(event, pygame, self.game_display, self.enemies)
+
         # sleep(0.5)
         self.gui_update()
         # self.map.update(pygame, self.game_display)
@@ -143,6 +160,36 @@ class Application:
         # image = pygame.transform.scale(image, (790, 740))
         self.game_display.blit(image, (0, 0))
 
+    def end_game(self):
+        # drittspil
+        image = pygame.image.load("lib/img/gameover.png")
+        # image = pygame.transform.scale(image, (790, 740))
+        self.game_display.blit(image, (0, 0))
+        # self.is_paused = True
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.crashed = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_y:
+                    self.crashed = True
+                elif event.key == pygame.K_n:
+                    self.exiting = False
+
+
+
+
+    def paused(self):
+        image = pygame.image.load("lib/img/pause.png")
+        # image = pygame.transform.scale(image, (790, 740))
+        self.game_display.blit(image, (0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.crashed = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    self.is_paused = False
+
+
 
     def start_game(self):
         for event in pygame.event.get():
@@ -181,9 +228,10 @@ class Application:
 
     def add_enemy(self):
         threading.Timer(self.enemy_spawn_time, self.add_enemy).start()
-        test_enemy = Enemy(random.randint(0, self.display_width),
-                           random.randint(0, self.display_height), self.health_bar, pygame, self.multiplier)
-        self.enemies.append(test_enemy)
+        if not self.is_paused and not self.exiting:
+            test_enemy = Enemy(random.randint(0, self.display_width),
+                               random.randint(0, self.display_height), self.health_bar, pygame, self.multiplier)
+            self.enemies.append(test_enemy)
 
 
     def gui_update(self):
