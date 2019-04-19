@@ -10,13 +10,12 @@ class ScoreScreen:
             for row in csv_reader:
                 line_count += 1
             if row:
-                print("Name: " + row[0] + " Score: " + row[1])
-                return row[0] + row[1]
+                return row[0] + " -> " + row[1]
 
 
     def score_save(self, username, score):
         with open('scores.csv', mode='w') as scores:
-            print("Saving score....")
-            employee_writer = csv.writer(scores, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            employee_writer.writerow([username, score])
+            if score > row[1]:
+                employee_writer = csv.writer(scores, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                employee_writer.writerow([username, score])
 
