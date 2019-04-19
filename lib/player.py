@@ -158,15 +158,10 @@ class Player:
         return ceil(100*(level/1.15))
     
     def level_up_hp(self, heal):
-        hp_low = heal-5
-        hp_high = heal+5
-        new_hp = random.randrange(int(hp_low), int(hp_high))
-        print(self.hp)
-        self.max_hp = heal
-        if self.hp > self.max_hp:
-            self.hp = self.max_hp
-        else:
-            self.hp = new_hp
+        new_hp = heal
+        print("New hp -> ", new_hp)
+        self.max_hp = new_hp
+        self.hp = self.max_hp
         # print(self.hp, self.max_hp)
 
     def hp(self):

@@ -188,7 +188,6 @@ class Enemy:
     def a_star(self, player_x, player_y, map, pygame, enemies):
         frontier = PriorityQueue()
         current = (self.x_position, self.y_position)
-        print(self.x_position)
         priority = self.heuristic((player_x, player_y), current)
         frontier.put(current, priority, 0)
 
