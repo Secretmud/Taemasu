@@ -23,6 +23,7 @@ class Application:
         self.talent_point = 0
         self.prev_level = 1
         self.name = "test name"
+        high_score_current = self.score_display.score_read()
         self.score_display = ScoreScreen()
         pygame.display.set_caption('Taemasu v0.1')
         self.health_bar = pygame.image.load('lib/img/healthbar.png')
@@ -220,7 +221,7 @@ class Application:
         self.game_display.blit(image, (845, 300))
         high_score = self.myfont.render('Highscores:', False, (0, 0, 0))
         self.game_display.blit(high_score, (845, 235))
-        score_values = self.myfont.render(str(self.score_display.score_read()), False, (0, 0, 0))
+        score_values = self.myfont.render(str(high_score_current), False, (0, 0, 0))
         self.game_display.blit(score_values, (855, 265))
 
 if __name__ == "__main__":
