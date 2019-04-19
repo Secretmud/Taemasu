@@ -27,7 +27,7 @@ class Application:
         self.health_bar = pygame.image.load('lib/img/healthbar.png')
         self.player = Player(self.hp, self.attack, self.max_hp,
         self.display_width, self.display_height, self.health_bar, pygame)
-        self.game_display = pygame.display.set_mode((displaySize.current_w, displaySize.current_h))
+        self.game_display = pygame.display.set_mode((1200, 1000))
         self.white = (255, 255, 255)
         self.clock = pygame.time.Clock()
         self.crashed = False
@@ -175,9 +175,6 @@ class Application:
                 elif event.key == pygame.K_n:
                     self.exiting = False
 
-
-
-
     def paused(self):
         image = pygame.image.load("lib/img/pause.png")
         # image = pygame.transform.scale(image, (790, 740))
@@ -188,8 +185,6 @@ class Application:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     self.is_paused = False
-
-
 
     def start_game(self):
         for event in pygame.event.get():
@@ -258,6 +253,10 @@ class Application:
         self.game_display.blit(enemy_damage, (845, 205))
         image = pygame.transform.scale(self.player.playerImg, (120, 200))
         self.game_display.blit(image, (845, 300))
+        high_score = self.myfont.render('Highscores:', False, (0, 0, 0))
+        self.game_display.blit(high_score, (845, 235))
+        score_values = self.myfont.render(str(high_score_current), False, (0, 0, 0))
+        self.game_display.blit(score_values, (855, 265))
 
 if __name__ == "__main__":
     main = Application()
